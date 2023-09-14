@@ -1,0 +1,47 @@
+
+
+Example 1:
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+Eaxmple 2:
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+
+Example 3:
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.
+
+//code 
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+bool hasCycle(struct ListNode *head) {
+    if (head == NULL) {
+        return false;  // No cycle if the list is empty
+    }
+
+    struct ListNode *slow = head;  // Tortoise pointer
+    struct ListNode *fast = head;  // Hare pointer
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;         // Move slow by one step
+        fast = fast->next->next;   // Move fast by two steps
+
+        // If there is a cycle, the fast pointer will eventually catch up to the slow pointer
+        if (slow == fast) {
+            return true;  // There is a cycle
+        }
+    }
+
+    return false;  // No cycle found
+}
